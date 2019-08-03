@@ -1,5 +1,11 @@
 package com.jmeter.boot.model;
 
+/**
+ * Description: 用户信息类
+ *
+ *@author JinJiacheng
+ *@date 2019/8/3 22:42
+ */
 public class User {
 
     private Integer userId; //用户id
