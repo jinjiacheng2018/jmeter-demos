@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jmeter.boot.mapper.UserMapper">
+
+    <resultMap id="RM" type="com.jmeter.boot.model.User">
+        <id column="user_age" property="userAge"/>
+        <id column="user_id" property="userId"/>
+        <id column="user_name" property="userName"/>
+        <id column="user_email" property="userEmail"/>
+    </resultMap>
+
+    <!-- 查询所有 -->
+    <select id="findAll" resultMap="RM">
+        SELECT * FROM user
+    </select>
+
+    <!-- 根据ID查询 -->
+    <select id="findById" resultMap="RM" parameterType="com.jmeter.boot.model.User">
+        SELECT * FROM user WHERE user_id = #{userId}
+    </select>
+
+    <!-- 创建获取 -->
+    <insert id="create" parameterType="com.jmeter.boot.model.User" keyProperty="userId" useGeneratedKeys="true">
+        <!--Oracle使用此方式-->
+        <!--<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="userId">-->
+        <!--SELECT LAST_INSERT_ID()-->
+        <!--</selectKey>-->
+        INSERT INTO user(user_name, user_age, user_email) VALUES (#{userName}, #{userAge}, #{userEmail})
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="com.jmeter.boot.model.User">
+        DELETE FROM user WHERE user_id = #{userId}
+    </delete>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.jmeter.boot.model.User">
+        UPDATE user
+        <trim prefix="SET" suffixOverrides="," suffix=" WHERE user_id = #{userId}">
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="userAge != null">
+                user_age = #{userAge},
+            </if>
+            <if test="userEmail != null">
+                user_email = #{userEmail} ,
+            </if>
+        </trim>
+    </update>
+
+    <!-- 根据用户名查询 -->
+    <select id="findByName" parameterType="com.jmeter.boot.model.User" resultMap="RM">
+        SELECT * FROM user WHERE user_name = #{userName}
+    </select>
+</mapper>
