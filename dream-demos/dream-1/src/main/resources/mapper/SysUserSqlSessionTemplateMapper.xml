@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dream.boot.domain.SysUserSqlSessionTemplate">
+
+    <resultMap id="RM" type="com.dream.boot.model.SysUser">
+        <result property="id" column="ID"/>
+        <result property="username" column="USERNAME"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="chineseName" column="CHINESE_NAME"/>
+        <result property="email" column="EMAIL"/>
+        <result property="phoneNo" column="PHONE_NO"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="whenCreated" column="WHEN_CREATED"/>
+        <result property="whenModifide" column="WHEN_MODIFIDE"/>
+        <result property="whoCreated" column="WHO_CREATED"/>
+        <result property="whoModifide" column="WHO_MODIFIDE"/>
+        <result property="deleted" column="DELETED"/>
+    </resultMap>
+
+    <sql id="COLUMNS">
+	  <![CDATA[
+		t.ID,t.USERNAME,t.PASSWORD,t.CHINESE_NAME,t.EMAIL,t.PHONE_NO,t.ADDRESS,t.WHEN_CREATED,t.WHEN_MODIFIDE,t.WHO_CREATED,t.WHO_MODIFIDE,t.DELETED
+        ]]>
+	</sql>
+
+    <sql id="WHERES">
+        <where>
+            <if test="id!=null">
+                AND t.ID = #{id}
+            </if>
+            <if test="username!=null">
+                AND t.USERNAME = #{username}
+            </if>
+            <if test="password!=null">
+                AND t.PASSWORD = #{password}
+            </if>
+            <if test="chineseName!=null">
+                AND t.CHINESE_NAME = #{chineseName}
+            </if>
+            <if test="email!=null">
+                AND t.EMAIL = #{email}
+            </if>
+            <if test="phoneNo!=null">
+                AND t.PHONE_NO = #{phoneNo}
+            </if>
+            <if test="address!=null">
+                AND t.ADDRESS = #{address}
+            </if>
+            <if test="whenCreated!=null">
+                AND t.WHEN_CREATED = #{whenCreated}
+            </if>
+            <if test="whenModifide!=null">
+                AND t.WHEN_MODIFIDE = #{whenModifide}
+            </if>
+            <if test="whoCreated!=null">
+                AND t.WHO_CREATED = #{whoCreated}
+            </if>
+            <if test="whoModifide!=null">
+                AND t.WHO_MODIFIDE = #{whoModifide}
+            </if>
+            <if test="deleted!=null">
+                AND t.DELETED = #{deleted}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="com.dream.boot.model.SysUser" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+        INSERT INTO SYS_USER (
+        	USERNAME ,
+        	PASSWORD ,
+        	CHINESE_NAME ,
+        	EMAIL ,
+        	PHONE_NO ,
+        	ADDRESS ,
+        	WHEN_CREATED ,
+        	WHEN_MODIFIDE ,
+        	WHO_CREATED ,
+        	WHO_MODIFIDE ,
+        	DELETED 
+        ) VALUES (
+        	#{username} ,
+        	#{password} ,
+        	#{chineseName} ,
+        	#{email} ,
+        	#{phoneNo} ,
+        	#{address} ,
+        	#{whenCreated} ,
+        	#{whenModifide} ,
+        	#{whoCreated} ,
+        	#{whoModifide} ,
+        	#{deleted} 
+        )
+      ]]>
+    </insert>
+
+    <update id="update" parameterType="com.dream.boot.model.SysUser">
+      <![CDATA[
+        UPDATE SYS_USER SET
+	        USERNAME = #{username} ,
+	        PASSWORD = #{password} ,
+	        CHINESE_NAME = #{chineseName} ,
+	        EMAIL = #{email} ,
+	        PHONE_NO = #{phoneNo} ,
+	        ADDRESS = #{address} ,
+	        WHEN_CREATED = #{whenCreated} ,
+	        WHEN_MODIFIDE = #{whenModifide} ,
+	        WHO_CREATED = #{whoCreated} ,
+	        WHO_MODIFIDE = #{whoModifide} ,
+	        DELETED = #{deleted} 
+        WHERE 
+	        ID = #{id} 
+        ]]>
+	</update>
+
+    <delete id="delete" parameterType="com.dream.boot.model.SysUser">
+      <![CDATA[
+        DELETE FROM SYS_USER WHERE
+        ID = #{id} 
+        ]]>
+    </delete>
+
+    <select id="uniqueResult" parameterType="com.dream.boot.model.SysUser" resultMap="RM">
+        SELECT
+        <include refid="COLUMNS"/>
+        FROM SYS_USER t
+        <include refid="WHERES"/>
+    </select>
+
+    <select id="list" parameterType="com.dream.boot.model.SysUser" resultMap="RM">
+        SELECT
+        <include refid="COLUMNS"/>
+        FROM SYS_USER t
+        <include refid="WHERES"/>
+    </select>
+
+    <select id="count" parameterType="com.dream.boot.model.SysUser" resultType="int">
+        SELECT COUNT(1) FROM SYS_USER t
+        <include refid="WHERES"/>
+    </select>
+
+</mapper>
+
